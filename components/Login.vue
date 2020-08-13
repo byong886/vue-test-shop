@@ -27,8 +27,8 @@ export default {
   data () {
     return {
       loginform: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '123456'
       },
       /* 表单基本校验规则对象,注意,校验名要和v-model绑定的字段名一致,校验才会生效 */
       loginRule: {
