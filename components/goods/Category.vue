@@ -37,7 +37,12 @@
         <!--操作模块-->
         <template slot="oper" slot-scope="scope">
           <el-button type="primary" size="mini" class="el-icon-edit">编辑</el-button>
-          <el-button type="danger" size="mini" class="el-icon-delete" @click="delCate(scope.row.cat_id)">删除</el-button>
+          <el-button
+            type="danger"
+            size="mini"
+            class="el-icon-delete"
+            @click="delCate(scope.row.cat_id)"
+          >删除</el-button>
         </template>
       </tree-table>
       <!--分页区域-->
@@ -152,7 +157,7 @@ export default {
     handleCurrentChange (currpage) {
       this.queryInfo.pagenum = currpage
       this.getCateList()
-      // console.log(currpage)
+      console.log('当前页:' + currpage)
     },
     showCateDialog () {
       this.cateDialogVisible = true
@@ -182,8 +187,8 @@ export default {
           const { data: ret } = await this.$http.post('categories', this.addCateForm)
           if (ret.meta.status !== 201) return this.$message.error('添加失败')
           this.getCateList()
-          this.cateDialogVisible = false
           this.getParentCateList()
+          this.cateDialogVisible = false
           this.$message.success('添加成功')
         }
       })
@@ -195,12 +200,19 @@ export default {
       this.addCateForm.cat_pid = 0
       this.addCateForm.cat_level = 0
     },
-    async delCate (cateId) {
-      const { data: ret } = await this.$http.delete(`categories/${cateId}`)
-      if (ret.meta.status !== 200) return this.$message.error('删除失败')
-      this.getCateList()
-      this.getParentCateList()
-      this.$message.success('删除成功')
+    delCate (cateId) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(async () => {
+        const { data: ret } = await this.$http.delete(`categories/${cateId}`)
+        if (ret.meta.status !== 200) return this.$message.error('删除失败')
+        this.getCateList()
+        this.getParentCateList()
+        this.$message.success('删除成功')
+      }).catch(() => {
+        this.$message.info('放弃删除')
+      })
       // console.log(catId)
     }
   }
