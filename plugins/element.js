@@ -40,12 +40,15 @@ import {
   Upload
 } from 'element-ui'
 
+// 手动导入TimeLine相关组件,vue-cli没有加入该组件
+import TimeLine from './timeline/index'
+import TimeLineItem from './timeline-item/index'
+
 // Message是弹窗提示组件,要求全局挂载在Vue实例上
 Vue.use(Button)
 Vue.use(Form)
 Vue.use(Input)
 Vue.use(FormItem)
-Vue.prototype.$message = Message
 Vue.use(Container)
 Vue.use(Header)
 Vue.use(Main)
@@ -65,7 +68,6 @@ Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
-Vue.prototype.$confirm = MessageBox.confirm
 Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Select)
@@ -79,3 +81,7 @@ Vue.use(Steps)
 Vue.use(CheckboxGroup)
 Vue.use(Checkbox)
 Vue.use(Upload)
+Vue.use(TimeLine)
+Vue.use(TimeLineItem)
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$message = Message
